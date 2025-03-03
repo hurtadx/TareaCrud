@@ -28,7 +28,7 @@ productoForm.addEventListener("submit", (e) => {
       nombre: nombrePro.value,
       precio: precioPro.value,
       descripcion: descripcionPro.value,
-      imagen: imagenPro.value || "https:
+      imagen: imagenPro.value || "https://via.placeholder.com/150"
     };
     
     guardarDatos(productoObject);
@@ -396,7 +396,7 @@ btnPdf.addEventListener("click", () => {
 document.addEventListener("DOMContentLoaded", () => {
   
   const bootstrapScript = document.createElement('script');
-  bootstrapScript.src = 'https:
+  bootstrapScript.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js';
   document.body.appendChild(bootstrapScript);
   
   
