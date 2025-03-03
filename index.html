@@ -1,45 +1,142 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Productos</title>
+    <title>Sistema de Gestión de Productos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
     <script src="https://unpkg.com/jspdf-autotable@latest/dist/jspdf.plugin.autotable.js"></script>
     <link rel="stylesheet" href="styles.css">
-
 </head>
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <i class="fas fa-store me-2"></i>
-                Catálogo de Productos
+                <i class="fas fa-box-archive me-2"></i>
+                Tarea Crud
             </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="theme-toggle">
+                            <i class="fas fa-moon me-1"></i> Modo oscuro
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
    
     <div class="header-container">
-        <div class="container">
-            <h1 class="text-center my-4 animate-title">Gestión de Productos</h1>
-            <p class="text-center text-muted subtitle">Administra tu inventario de manera sencilla y eficiente</p>
+        <div class="container position-relative">
+            <div class="row align-items-center">
+                <div class="col-lg-7 mb-4 mb-lg-0">
+                    <div class="header-content">
+                        <span class="badge bg-primary-light text-primary mb-2">Sistema CRUD 2.0</span>
+                        <h1 class="display-4 fw-bold animate-title">
+                            Gestión de <span class="text-primary">Productos</span>
+                        </h1>
+                        <p class="subtitle lead mb-4">
+                            Administra tu inventario de manera sencilla y efectiva con nuestro sistema inteligente de gestión.
+                        </p>
+                        <div class="d-flex header-stats">
+                            <div class="stat-item me-4 animate-up">
+                                <div class="stat-icon">
+                                    <i class="fas fa-boxes"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 class="mb-0 counter" id="headerProductCount">0</h3>
+                                    <p class="small mb-0">Productos registrados</p>
+                                </div>
+                            </div>
+                            <div class="stat-item animate-up" style="animation-delay: 0.2s">
+                                <div class="stat-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 class="mb-0">100%</h3>
+                                    <p class="small mb-0">Rendimiento</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 d-none d-lg-block">
+                    <div class="header-illustration">
+                        <img src="https://cdn-icons-png.flaticon.com/512/4300/4300058.png" alt="Ilustración" class="img-fluid header-img animate-float">
+                        <div class="circles">
+                            <div class="circle circle-1"></div>
+                            <div class="circle circle-2"></div>
+                            <div class="circle circle-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-wave">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
+                <path fill="#f5f7ff" fill-opacity="1" d="M0,64L60,58.7C120,53,240,43,360,48C480,53,600,75,720,80C840,85,960,75,1080,64C1200,53,1320,43,1380,37.3L1440,32L1440,100L1380,100C1320,100,1200,100,1080,100C960,100,840,100,720,100C600,100,480,100,360,100C240,100,120,100,60,100L0,100Z"></path>
+            </svg>
         </div>
     </div>
 
-    <div class="container main-content">
+        <div class="container main-content">
+                <div class="row mb-4 stats-dashboard">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-card-body">
+                        <div class="stat-card-icon bg-primary-light">
+                            <i class="fas fa-boxes text-primary"></i>
+                        </div>
+                        <div>
+                            <span class="stat-card-title">Total Productos</span>
+                            <h3 class="stat-card-value" id="dashboardProductCount">0</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-card-body">
+                        <div class="stat-card-icon bg-success-light">
+                            <i class="fas fa-dollar-sign text-success"></i>
+                        </div>
+                        <div>
+                            <span class="stat-card-title">Valor Total</span>
+                            <h3 class="stat-card-value" id="dashboardTotalValue">$0.00</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-card-body">
+                        <div class="stat-card-icon bg-warning-light">
+                            <i class="fas fa-sync-alt text-warning"></i>
+                        </div>
+                        <div>
+                            <span class="stat-card-title">Última Actualización</span>
+                            <h3 class="stat-card-value" id="dashboardLastUpdate">Hoy</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
-            
-            <div class="col-lg-5 mb-4">
-                <div class="card shadow-sm">
-                    <div class="card-header d-flex align-items-center">
-                        <i class="fas fa-plus-circle me-2"></i>
-                        <span id="form-title">Añadir Producto</span>
+                        <div class="col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-header" id="form-title">
+                        <i class="fas fa-plus-circle me-2"></i>Añadir Producto
                     </div>
                     <div class="card-body">
                         <form id="productoForm">
@@ -51,7 +148,7 @@
                                 <label class="form-label"><i class="fas fa-dollar-sign me-2"></i>Precio</label>
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
-                                    <input type="number" class="form-control" id="precioPro" placeholder="0.00">
+                                    <input type="number" class="form-control" id="precioPro" placeholder="0.00" step="0.01">
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -60,18 +157,17 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label"><i class="fas fa-image me-2"></i>Imagen (URL)</label>
-                                <input type="url" class="form-control" id="imagenPro" placeholder="https://ejemplo.com/imagen.jpg">
-                                <div class="form-text">Introduce la URL de la imagen del producto</div>
+                                <input type="text" class="form-control" id="imagenPro" placeholder="https://ejemplo.com/imagen.jpg">
                             </div>
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary btnGuardad">
-                                    <i class="fas fa-save me-1"></i> Guardar Producto
+                                <button class="btn btn-primary btnGuardad" type="submit">
+                                    <i class="fas fa-save me-2"></i>Guardar Producto
                                 </button>
-                                <button type="submit" class="btn btn-success d-none btnActualizar">
-                                    <i class="fas fa-check-circle me-1"></i> Actualizar Producto
+                                <button class="btn btn-success btnActualizar d-none" type="button">
+                                    <i class="fas fa-sync-alt me-2"></i>Actualizar Producto
                                 </button>
-                                <button type="button" class="btn btn-outline-secondary" id="btnLimpiar">
-                                    <i class="fas fa-undo me-1"></i> Limpiar Formulario
+                                <button class="btn btn-outline-secondary" type="button" id="btnLimpiar">
+                                    <i class="fas fa-eraser me-2"></i>Limpiar Formulario
                                 </button>
                             </div>
                         </form>
@@ -79,70 +175,74 @@
                 </div>
             </div>
             
-        
-            <div class="col-lg-7">
-                <div class="card shadow-sm">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <i class="fas fa-list me-2"></i>
-                            <span>Lista de Productos</span>
+                        <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-table me-2"></i>Listado de Productos
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-outline-primary btnPdf" title="Exportar a PDF">
+                                    <i class="fas fa-file-pdf me-1"></i>PDF
+                                </button>
+                            </div>
                         </div>
-                        <button type="button" class="btn btn-sm btn-outline-primary btnPdf">
-                            <i class="fas fa-file-pdf me-1"></i> Exportar PDF
-                        </button>
                     </div>
                     <div class="card-body">
-                        <!-- Filtros -->
-                        <div class="filter-container mb-4">
-                            <h6><i class="fas fa-filter me-2"></i>Filtros</h6>
-                            <div class="row g-2">
-                                <div class="col-md-4">
-                                    <select id="filterType" class="form-select">
-                                        <option value="nombre">Nombre</option>
-                                        <option value="precio">Precio</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <input type="text" id="filterValue" class="form-control" placeholder="Filtrar por...">
-                                        <button type="button" class="btn btn-primary" id="btnFiltrar">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <button id="btnLimpiarFiltro" class="btn btn-outline-secondary w-100">
-                                        <i class="fas fa-times"></i>
+                                                <div class="row mb-3">
+                            <div class="col-md-4">
+                                <select class="form-select" id="filterType">
+                                    <option value="nombre">Filtrar por nombre</option>
+                                    <option value="precio">Filtrar por precio</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="filterValue" placeholder="Buscar...">
+                                    <button class="btn btn-outline-primary" type="button" id="btnFiltrar">
+                                        <i class="fas fa-search"></i>
                                     </button>
                                 </div>
                             </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-outline-secondary w-100" type="button" id="btnLimpiarFiltro">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
                         </div>
                         
-               
-                        <div class="d-flex justify-content-between mb-2">
-                            <span id="productCount" class="text-muted"></span>
-                            <span id="filtroActivo" class="badge bg-info d-none">Filtro activo</span>
+                                                <div class="d-flex justify-content-between mb-2">
+                            <p class="mb-0">
+                                <span class="badge bg-info d-none" id="filtroActivo">
+                                    <i class="fas fa-filter me-1"></i>Filtro aplicado
+                                </span>
+                            </p>
+                            <p class="text-muted mb-0" id="productCount">0 productos</p>
                         </div>
                         
-          
-                        <div class="table-responsive">
-                            <table class="table table-hover table-striped">
-                                <thead class="table-light">
+                                                <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Nombre</th>
                                         <th>Precio</th>
                                         <th>Descripción</th>
                                         <th>Imagen</th>
-                                        <th>Acción</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
                             </table>
                         </div>
-                        <div id="emptyMessage" class="text-center p-4 d-none">
-                            <i class="fas fa-box-open fa-3x mb-3 text-muted"></i>
-                            <p>No hay productos que mostrar</p>
+                        
+                                                <div id="emptyMessage" class="text-center p-4 d-none">
+                            <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                            <p class="lead text-muted">No hay productos para mostrar</p>
+                            <button class="btn btn-primary mt-2" id="addFirstProduct">
+                                <i class="fas fa-plus-circle me-2"></i>Añadir mi primer producto
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -150,13 +250,28 @@
         </div>
     </div>
 
-
-    <footer class="footer mt-5 py-3">
-        <div class="container text-center">
-            <p class="mb-0 text-muted">Sistema de Gestión de Productos © 2025</p>
+        <footer class="footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-3">InventoryPro</h5>
+                    <p class="text-light-muted">El sistema más completo para la gestión de inventario de productos.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-home me-1"></i> Inicio</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle me-1"></i> Ayuda</a></li>
+                        <li><a href="#"><i class="fas fa-code me-1"></i> API</a></li>
+                    </ul>
+                    <p class="copyright">© 2025 InventoryPro. Todos los derechos reservados.</p>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <script src="localStorage.js"></script>
+        <div class="toast-container"></div>
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="localStorage.js"></script>
 </body>
 </html>
