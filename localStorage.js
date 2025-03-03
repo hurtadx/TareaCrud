@@ -1,4 +1,3 @@
-
 const d = document;
 const tabla = d.querySelector("tbody");
 const nombrePro = d.getElementById("nombrePro");
@@ -81,12 +80,15 @@ function mostrarDatos(productosAMostrar) {
       fila.style.animation = `fadeIn 0.3s ease forwards ${i * 0.05}s`;
       fila.style.opacity = "0";
       
+      
+      const defaultImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAADy0lEQVR4nO3cT2hcVRTH8e+ZNBWkKrTWP6miqzQudCEUXbQ7KYL/NlWxuhUEXbhrV5Fu3Lj1H7gQREFdNKigQrqxgqigbhqwKAi1Cik0IYm0zeRaJpoxJPPm3nPfzDsf+O2S+zvn3Ttz582bEBERERERERGRKrPQBSyWma0ArgNuAK4FrgbWApcXP3PAWeA0MAl8D0yY2R8h6g0taoOY2UrgLuB+YBuwMXGIU8ABYMzMfnBUXjSiaxAzWwE8CDwJbPIU9hDwupnt9xQvqGgaxMw2A28BW0qKOAo8aWaflyR/YcEbxMyuAt4D1pccdRT4n6xvlpw3l2D7EDNbA3xMmHPDeuAjM7sqQO7cgjSImW0gs4F7ApdyPfBOcRUSvSANYmZXAJ8CGwOXMm87sMvMQk82cwl15u8Hbg1Uw1JeMLOtoYtYSu43qJntAh6LqaYm77iwM/fgVefz2zezR4DXcmcltAs4HLqIxXJdQczsduAAsD5HRpPngC+BH4vHb8DPZD+srgQ2Aw8BDwArPdeyiDHgfgtxz+USvDdI8UM29NXUaeAF4C0zO9csyMzWkXVx3gBGPNfVwlEzu8VngA9+G8TMTOG29h4ws91nisNm9iswZmZvAk+TXcmWxSXAXr8hPvj+DIn9HvFh4FFzsjA1s73AXmCdg7hmnq5Kk3i9gjCzO4Gn/FUT3BYz2+F78rLN6BKu3mJ3NYi3K4iZrSXb7FQlL5rZRp8Teu7yIeC7o1Xi6hLP1xV3d28qoj/MbK/PCb1eQcxsG3CPz/kitmHY04Telpxm9gmHZ0FVfPNl9HoP8ISvvAjd6Wsi32v5jZ7mCc21O70l8rq8MAMTT98J2SVuKLf0lsgaxL+VvgYxs2GkjL8Dq+dlG8S/S30N4mfbK1fdIJ398venr0H8+93XIGa2CRlsfQ3i37CvQRxdHW/pM5GvBjkDnPA0V+xO+ZrI11nzY51FKVX2fPcPfd7ufQ0ytijrSnHc10S+GuRI55eUxkQpiXz+prsInPS1zh+Qw74m8tIgRUf3uI+5ImY+FwaU57PEj52MfuE575vP14Mys2+BD33OF5kjZrbP56PDvjuDXvY8XyxO+flPrCd+/qzA3oE+h/MqG3bdIGZ2AHjHSz1xeSb4w2fM7AlgzEVFcXmqKg2ym+wfN6piF3CyCg3yA/BIlP8V4s4JM3ukEg0CYGafAS+HrsOTl83s89BFuBTys3K2m1lZX5DmwxFg2Mxq8XcqQa8gAGZ2Fvgr2O3kfM4D75vZDt+flaUQvEEAij/luJfsz9T+Bl1Me+eAfcAWM3vYzE4ErEdERERERERERCQW/wH8xKbDQHj+aQAAAABJRU5ErkJggg==';
+      
       fila.innerHTML = `
         <td>${i + 1}</td>
         <td><strong>${prod.nombre}</strong></td>
         <td>$${parseFloat(prod.precio).toFixed(2)}</td>
         <td>${prod.descripcion.length > 30 ? prod.descripcion.substring(0, 30) + '...' : prod.descripcion}</td>
-        <td><img src="${prod.imagen}" alt="${prod.nombre}" onerror="this.src='https:
+        <td><img src="${prod.imagen}" alt="${prod.nombre}" onerror="this.src='${defaultImage}'" class="img-thumbnail"></td>
         <td>
             <div class="d-flex flex-nowrap">
                 <span onclick="actualizarProducto(${i})" class="btn-editar" title="Editar"><i class="fas fa-edit"></i></span>
@@ -321,75 +323,82 @@ function getIconForType(type) {
 }
 
 
+
 btnPdf.addEventListener("click", () => {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  
-  
-  doc.setFontSize(18);
-  doc.text("Listado de Productos", 105, 15, { align: "center" });
-  doc.setLineWidth(0.5);
-  doc.line(20, 20, 190, 20);
-  
-  
-  doc.setFontSize(11);
-  doc.setTextColor(100);
-  
-  const headers = ["#", "Nombre", "Precio", "Descripción"];
-  const data = [];
-  
-  const productos = JSON.parse(localStorage.getItem("productos")) || [];
-  
-  productos.forEach((producto, index) => {
-    data.push([
-      index + 1,
-      producto.nombre,
-      `$${parseFloat(producto.precio).toFixed(2)}`,
-      producto.descripcion.length > 30 ? producto.descripcion.substring(0, 30) + '...' : producto.descripcion
-    ]);
-  });
-  
-  
-  if (productos.length === 0) {
-    doc.setTextColor(100);
-    doc.text("No hay productos para mostrar", 105, 40, { align: "center" });
-  } else {
+  try {
     
-    const startY = 30;
-    doc.autoTable({
-      head: [headers],
-      body: data,
-      startY: startY,
-      theme: 'striped',
-      headStyles: { 
-        fillColor: [108, 99, 255],
-        textColor: 255
-      },
-      columnStyles: {
-        0: { cellWidth: 20 },
-        1: { cellWidth: 60 },
-        2: { cellWidth: 30 },
-        3: { cellWidth: 80 }
-      },
-      styles: {
-        overflow: 'ellipsize',
-        cellPadding: 3
-      }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Título del documento
+    doc.setFontSize(18);
+    doc.text("Listado de Productos", 105, 15, { align: "center" });
+    doc.setLineWidth(0.5);
+    doc.line(20, 20, 190, 20);
+    
+
+    doc.setFontSize(11);
+    doc.setTextColor(100);
+    
+    const headers = ["#", "Nombre", "Precio", "Descripción"];
+    const data = [];
+    
+    const productos = JSON.parse(localStorage.getItem("productos")) || [];
+    
+    productos.forEach((producto, index) => {
+      data.push([
+        index + 1,
+        producto.nombre,
+        `$${parseFloat(producto.precio).toFixed(2)}`,
+        producto.descripcion.length > 30 ? producto.descripcion.substring(0, 30) + '...' : producto.descripcion
+      ]);
     });
     
-    
-    const pageCount = doc.internal.getNumberOfPages();
-    for(let i = 1; i <= pageCount; i++) {
-      doc.setPage(i);
-      doc.setFontSize(10);
-      doc.setTextColor(150);
-      doc.text(`Página ${i} de ${pageCount} - Generado el ${new Date().toLocaleDateString()}`, 105, doc.internal.pageSize.height - 10, { align: "center" });
+
+    if (productos.length === 0) {
+      doc.setTextColor(100);
+      doc.text("No hay productos para mostrar", 105, 40, { align: "center" });
+    } else {
+
+      const startY = 30;
+      doc.autoTable({
+        head: [headers],
+        body: data,
+        startY: startY,
+        theme: 'striped',
+        headStyles: { 
+          fillColor: [108, 99, 255],
+          textColor: 255
+        },
+        columnStyles: {
+          0: { cellWidth: 20 },
+          1: { cellWidth: 60 },
+          2: { cellWidth: 30 },
+          3: { cellWidth: 80 }
+        },
+        styles: {
+          overflow: 'ellipsize',
+          cellPadding: 3
+        }
+      });
+      
+
+      const pageCount = doc.internal.getNumberOfPages();
+      for(let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFontSize(10);
+        doc.setTextColor(150);
+        doc.text(`Página ${i} de ${pageCount} - Generado el ${new Date().toLocaleDateString()}`, 105, doc.internal.pageSize.height - 10, { align: "center" });
+      }
     }
+    
+
+    doc.save("productos.pdf");
+    showNotification("PDF generado exitosamente", "success");
+  } catch (error) {
+    console.error("Error al generar PDF:", error);
+    showNotification("Error al generar PDF. Verifica la consola para más detalles.", "danger");
   }
-  
-  
-  doc.save("productos.pdf");
-  showNotification("PDF generado exitosamente", "success");
 });
 
 
